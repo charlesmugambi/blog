@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- displaying  Username-->
+        <h3> {{user.username| capitalize}} </h3>
+        <hr>
+        <!--Display profile photo-->
+        <div class="col-md-3">
+            <div class="thumbnail">
+                {% if user.profile_pic_path %}
+                <img class="" src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail">
+                {%else%}
+                <p>No profile picture</p>
+                {% endif %}
+
+                {% if user == current_user %}
+                <form action="{{url_for('main.update_profile',uname=user.username)}}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="photo" class="form-control" required>
+                    <input type="submit">
+                </form>
+                    {% endif %}
+            </div>
+        </div>
+        <div class="col-md-9">
+            <p>Name: {{user.firstname}} {{user.lastname}} </p>
+            <p>No of blogs: {{blogs}}</p>
+            <p>Date joined: {{date}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+          <h3> Bio </h3>
+
+          <!--Displaying user bio-->
+          {% if user.bio %}
+            <p> {{user.bio}}</p>
+          {%else%}
+            <p> {{user.username| capitalize}} has no bio </p>
+          {% endif %}
+
+          {% if user == current_user %}
+          <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit profile</a>
+          {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%block styles%}
+    {{ super() }}
+{%endblock%}
+<!-- Content block -->
+{%block content%}
+<div class="container">
+    <div class="row">
+        <h3>{{post.title}}</h3>
+        <hr>
+        <p>{{post.text}}</p>
+        <span>
+        <p>Posted on {{post.date_posted.strftime('%Y-%m-%d')}}</p>
+        {% if current_user.is_authenticated and current_user.role_id == 1%}
+            <a href="{{url_for('main.delete_post',id = post.id)}}" class="btn btn-danger btn-sm">Delete post</a>
+            <a href="/post/update/{{post.id}}" class="btn btn-info btn-sm">Update post</a>
+        {%endif%}
+    </div>
+    <div class="row">
+        <h4>Comments</h4>
+        <hr>
+        {% if current_user.is_authenticated %}
+            {{ wtf.quick_form(form) }}
+        {%endif%}
+        {%for comment in comments%}
+            <div class="col-md-12">
+                <h5>{{comment.user.username}}</h5>
+                <p>{{comment.comment}}</p>
+                {% if current_user.is_authenticated and current_user.role_id == 1%}
+                    <a href="{{url_for('main.delete_comment',id = comment.id,post_id = comment.post)}}" class="btn btn-danger btn-sm">Delete comment</a>
+                {%endif%}
+            </div>
+        {%endfor%}
+    </div>
+</div>
+{%endblock%}

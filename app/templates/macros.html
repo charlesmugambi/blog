@@ -1,0 +1,10 @@
+{% macro displayPosts(post_list)%} {%for post in post_list%}
+<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+    <div class="well well-lg" style="background-color: rgb(38, 226, 54);">
+        <h4>{{post.title}}</h4>
+        <p>{{post.text| truncate(120)}}</p>
+        <p>Posted on: {{post.date_posted.strftime('%Y-%m-%d')}} <a href="/post/{{post.id}}" class="btn btn-primary pull-right">Read</a></p>
+
+    </div>
+</div>
+{%endfor%} {%endmacro%}

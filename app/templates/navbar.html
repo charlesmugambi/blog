@@ -1,0 +1,38 @@
+<div class="navbar navbar-light" role="navigation" style="margin-bottom:0; border-bottom: 1px solid">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand"><i>MUGAMBI BLOGERS</i> </a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">HOME</a></li>
+                <li><a href="{{url_for('main.all_posts')}}">BLOGS</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{current_user.username| capitalize}} <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{url_for('main.new_post')}}">Create post</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
+                        <li><a href="{{url_for('main.user_blogs',uname=current_user.username)}}">My Blogs</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
+
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href="{{url_for('auth.login')}}">Log in</a></li>
+            </ul>
+            {%endif%}
+        </div>
+    </div>
+</div>

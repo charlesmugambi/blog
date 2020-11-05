@@ -1,0 +1,3 @@
+Hi {{user.username}},
+
+Your account on Rita Blog has been created.
